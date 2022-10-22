@@ -14,11 +14,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('categorias', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('nome');
             $table->string('slug');
-            $table->text('description');
+            $table->text('descricao');
             $table->boolean('is_active')->default(true);
             $table->foreignIdFor(User::class)->references('id')->on('users')->onDelete('CASCADE');
             $table->softDeletes();
@@ -33,9 +33,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('categories', function (Blueprint $table) {
+        Schema::table('categorias', function (Blueprint $table) {
             $table->dropForeignIdFor(User::class);
         });
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('categorias');
     }
 };
