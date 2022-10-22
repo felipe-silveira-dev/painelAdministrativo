@@ -17,4 +17,9 @@ class Marca extends Model
         'slug',
         'descricao',
     ];
+
+    public function produtos()
+    {
+        return $this->hasMany(Produto::class);
+    }
 }

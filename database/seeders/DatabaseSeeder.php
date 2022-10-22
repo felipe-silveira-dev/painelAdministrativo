@@ -31,5 +31,7 @@ class DatabaseSeeder extends Seeder
         // \App\Models\Stock::factory(100)->create();
 
         \App\Models\Marca::factory(3)->create();
+        \App\Models\Categoria::factory(3)->create();
+        \App\Models\Produto::factory(10)->create();
     }
 }
