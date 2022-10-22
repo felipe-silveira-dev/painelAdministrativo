@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CustomerResource\Pages;
-use App\Filament\Resources\CustomerResource\RelationManagers;
-use App\Models\Customer;
+use App\Filament\Resources\ClienteResource\Pages;
+use App\Filament\Resources\ClienteResource\RelationManagers;
+use App\Models\Cliente;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class CustomerResource extends Resource
+class ClienteResource extends Resource
 {
-    protected static ?string $model = Customer::class;
+    protected static ?string $model = Cliente::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
@@ -23,21 +23,19 @@ class CustomerResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
+                Forms\Components\TextInput::make('nome')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('phone')
+                Forms\Components\TextInput::make('telefone')
                     ->tel()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('address')
+                Forms\Components\TextInput::make('cpf')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('city')
+                Forms\Components\TextInput::make('cnpj')
                     ->maxLength(255),
-                Forms\Components\Toggle::make('is_active')
-                    ->required(),
+                Forms\Components\DatePicker::make('data_nascimento'),
             ]);
     }
 
@@ -45,15 +43,16 @@ class CustomerResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')->searchable()->sortable(),
-                Tables\Columns\TextColumn::make('email')->searchable()->sortable(),
-                Tables\Columns\TextColumn::make('phone')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('nome'),
+                Tables\Columns\TextColumn::make('telefone'),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime('d/m/Y H:i:s')
+                    ->label('Atualizado em'),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -73,10 +72,10 @@ class CustomerResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCustomers::route('/'),
-            'create' => Pages\CreateCustomer::route('/create'),
-            'view' => Pages\ViewCustomer::route('/{record}'),
-            'edit' => Pages\EditCustomer::route('/{record}/edit'),
+            'index' => Pages\ListClientes::route('/'),
+            'create' => Pages\CreateCliente::route('/create'),
+            'view' => Pages\ViewCliente::route('/{record}'),
+            'edit' => Pages\EditCliente::route('/{record}/edit'),
         ];
     }
 
