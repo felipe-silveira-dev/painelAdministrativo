@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\BrandResource\Pages;
+namespace App\Filament\Resources\MarcaResource\Pages;
 
-use App\Filament\Resources\BrandResource;
+use App\Filament\Resources\MarcaResource;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\EditRecord;
 
-class EditBrand extends EditRecord
+class EditMarca extends EditRecord
 {
-    protected static string $resource = BrandResource::class;
+    protected static string $resource = MarcaResource::class;
 
     protected function getActions(): array
     {

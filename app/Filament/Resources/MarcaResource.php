@@ -2,9 +2,10 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\BrandResource\Pages;
-use App\Filament\Resources\BrandResource\RelationManagers;
-use App\Models\Brand;
+use App\Filament\Resources\MarcaResource\Pages;
+use App\Filament\Resources\MarcaResource\RelationManagers;
+use App\Models\Marca;
+use Closure;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -12,26 +13,33 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Str;
 
-class BrandResource extends Resource
+class MarcaResource extends Resource
 {
-    protected static ?string $model = Brand::class;
+    protected static ?string $model = Marca::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationGroup = 'Estoque';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                Forms\Components\TextInput::make('nome')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->autofocus()
+                    ->reactive()
+                    ->afterStateUpdated(function (Closure $set, $state) {
+                        $set('slug', Str::slug($state));
+                    }),
                 Forms\Components\TextInput::make('slug')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Textarea::make('description')
+                Forms\Components\Textarea::make('descricao')
                     ->required()
-                    ->maxLength(65535),
+                    ->maxLength(1200),
             ]);
     }
 
@@ -39,8 +47,13 @@ class BrandResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('description')->sortable()->searchable()->limit(7),
+                Tables\Columns\TextColumn::make('nome')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('descricao')
+                    ->sortable()
+                    ->searchable()
+                    ->limit(7),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
@@ -66,10 +79,10 @@ class BrandResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListBrands::route('/'),
-            'create' => Pages\CreateBrand::route('/create'),
-            'view' => Pages\ViewBrand::route('/{record}'),
-            'edit' => Pages\EditBrand::route('/{record}/edit'),
+            'index' => Pages\ListMarcas::route('/'),
+            'create' => Pages\CreateMarca::route('/create'),
+            'view' => Pages\ViewMarca::route('/{record}'),
+            'edit' => Pages\EditMarca::route('/{record}/edit'),
         ];
     }
 
