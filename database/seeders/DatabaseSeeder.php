@@ -14,10 +14,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\Marca::factory(3)->create();
-        // \App\Models\Categoria::factory(3)->create();
-        // \App\Models\Produto::factory(10)->create();
-        // \App\Models\Cliente::factory(10)->create();
+        \App\Models\User::factory(10)->create();
+        \App\Models\Marca::factory(3)->create();
+        \App\Models\Categoria::factory(3)->create();
+        \App\Models\Produto::factory(10)->create();
+        \App\Models\Cliente::factory(10)->create();
         \App\Models\MetodoPagamento::factory()->create([
             'nome' => 'Dinheiro',
             'descricao' => 'Pagamento em dinheiro',

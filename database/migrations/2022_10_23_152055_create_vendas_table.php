@@ -23,7 +23,7 @@ return new class extends Migration
             $table->date('data');
             $table->decimal('valor_total', 10, 2);
             $table->foreignIdFor(MetodoPagamento::class)->references('id')->on('metodo_pagamentos');
-            $table->decimal('desconto', 10, 2);
+            $table->decimal('desconto', 10, 2)->nullable();
             $table->text('observacao')->nullable();
             $table->softDeletes();
             $table->timestamps();

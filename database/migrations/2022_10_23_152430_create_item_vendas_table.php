@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignIdFor(Venda::class)->references('id')->on('vendas');
             $table->foreignIdFor(Produto::class)->references('id')->on('produtos');
             $table->integer('quantidade');
-            $table->decimal('valor', 10, 2);
+            $table->decimal('produto_preco', 10, 2);
             $table->softDeletes();
             $table->timestamps();
         });

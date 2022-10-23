@@ -90,11 +90,10 @@ class ProdutoResource extends Resource
                 // ->rounded()
                 // ->width('50px')
                 // ->height('50px'),
-                Tables\Columns\BooleanColumn::make('ativo'),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->sortable()
                     ->searchable()
-                    ->date('d/m/Y')
+                    ->date('d/m/Y H:i:s')
                     ->label('Atualizado em'),
             ])
             ->filters([

@@ -14,8 +14,7 @@ class ItemVenda extends Model
         'venda_id',
         'produto_id',
         'quantidade',
-        'valor',
-        'desconto',
+        'produto_preco',
     ];
 
 }

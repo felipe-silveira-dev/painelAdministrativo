@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\VendaResource\Pages;
-use App\Filament\Resources\VendaResource\RelationManagers;
 use App\Models\Cliente;
 use App\Models\MetodoPagamento;
 use App\Models\Produto;
@@ -11,9 +10,6 @@ use App\Models\User;
 use App\Models\Venda;
 use Closure;
 use Filament\Forms;
-use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\FormsComponent;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -51,29 +47,31 @@ class VendaResource extends Resource
                                             if ($produto) {
                                                 $set('preco', $produto->preco);
                                                 $set('quantidade', 1);
-                                                $set('valor', $produto->preco);
-                                                $set('desconto', 0);
+                                                $set('produto_preco', $produto->preco);
                                             }
                                         }),
                                     Forms\Components\TextInput::make('quantidade')
                                         ->numeric()
                                         ->label('Quantidade')
-                                        ->placeholder('Quantidade')
-                                        ->default(1)
-                                        ->reactive()
+                                        ->placeholder(function ($state) {
+                                            return $state['quantidade'] ?? 1;
+                                        })
                                         ->required(),
                                     Forms\Components\TextInput::make('preco')
                                         ->disabled()
                                         ->dehydrated(false)
-                                        ->numeric(),
-                                        //->numeric()
-                                        //->label('Preço')
-                                        //->placeholder('Preço')
-                                        //->reactive()
-                                        //->required(),
-                                    Forms\Components\Hidden::make('valor')
+                                        ->numeric()
+                                        ->label('Preço Unitário')
+                                        ->placeholder(function (Closure $get, Closure $set) {
+                                            $valorTotalItem = $get('preco') * $get('quantidade');
+                                            //$set('preco', $valorTotalItem);
+                                            $set('produto_preco', $valorTotalItem);
+                                        })
+                                        ,
+                                    Forms\Components\Hidden::make('produto_preco')
                                         ->disabled(),
-                                ])->columns(3),
+                                ])
+                                ->columns(3),
                         Forms\Components\Card::make()
                         ->schema([
                             Forms\Components\Select::make('cliente_id')
@@ -95,34 +93,28 @@ class VendaResource extends Resource
                                 ->placeholder('Selecione um método de pagamento')
                                 ->options(MetodoPagamento::all()->pluck('nome', 'id')->toArray())
                                 ->required(),
-                                Forms\Components\Textarea::make('observacao')
+                            Forms\Components\Textarea::make('observacao')
                                 ->label('Observação')
                                 ->placeholder('Observação'),
                             Forms\Components\TextInput::make('valor_total')
                                 ->label('Valor total')
-                                ->disabled()
-                                ->default(01),
-                            Forms\Components\TextInput::make('desconto')
-                                ->disabled()
-                                ->default(01)
-                                ->required(),
-                        ])->columns(2),
+                                ->prefix('R$')
+                                ->placeholder(function ($get, $set) {
+                                    $valorTotal = 0;
+                                    foreach ($get('itensVenda') as $item) {
+                                        $valorTotal += $item['produto_preco'];
+                                    }
+                                    $set('valor_total', $valorTotal);
+                                    return collect($get('itensVenda'))
+                                    ->pluck('produto_preco', 'quantidade')
+                                    ->sum();
+                                })
+                                ->disabled(),
+                        ])
+                        ->columns(2)
+
                                 ])
                     ])->columnSpan('full'),
-                // Forms\Components\TextInput::make('user_id')
-                //     ->required(),
-                // Forms\Components\TextInput::make('cliente_id')
-                //     ->required(),
-                // Forms\Components\TextInput::make('metodo_pagamento_id')
-                //     ->required(),
-                // Forms\Components\DatePicker::make('data')
-                //     ->required(),
-                // Forms\Components\TextInput::make('valor_total')
-                //     ->required(),
-                // Forms\Components\TextInput::make('desconto')
-                //     ->required(),
-                // Forms\Components\Textarea::make('observacao')
-                //     ->maxLength(65535),
             ]);
     }
 
@@ -131,9 +123,9 @@ class VendaResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id'),
-                Tables\Columns\TextColumn::make('data')
-                    ->date('d/m/Y'),
-                Tables\Columns\TextColumn::make('user.nome'),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->date('d/m/Y H:i:s', 'America/Sao_Paulo'),
+                Tables\Columns\TextColumn::make('user.name'),
                 Tables\Columns\TextColumn::make('valor_total'),
             ])
             ->filters([
@@ -153,7 +145,7 @@ class VendaResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+
         ];
     }
 

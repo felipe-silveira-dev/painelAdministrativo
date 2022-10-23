@@ -36,8 +36,4 @@ class Venda extends Model
     {
         return $this->hasMany(ItemVenda::class);
     }
-    // public function getValorTotalAttribute()
-    // {
-    //     return $this->itens->sum('valor_total');
-    // }
 }
