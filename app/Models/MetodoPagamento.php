@@ -13,4 +13,9 @@ class MetodoPagamento extends Model
         'nome',
         'descricao',
     ];
+
+    public function vendas()
+    {
+        return $this->hasMany(Venda::class);
+    }
 }

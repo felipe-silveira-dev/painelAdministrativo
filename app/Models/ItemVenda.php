@@ -6,16 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class PaymentMethod extends Model
+class ItemVenda extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $guarded = ['id'];
-
-    public function orders()
-    {
-        return $this->hasMany(Order::class);
-    }
-
+    protected $fillable = [
+        'venda_id',
+        'produto_id',
+        'quantidade',
+        'valor',
+        'desconto',
+    ];
 
 }

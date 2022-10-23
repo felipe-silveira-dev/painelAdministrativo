@@ -35,4 +35,10 @@ class Produto extends Model
     {
         return $this->belongsTo(Marca::class);
     }
+
+    // public function vendas()
+    // {
+    //     return $this->belongsToMany(Venda::class, 'item_vendas');
+    // }
+
 }
