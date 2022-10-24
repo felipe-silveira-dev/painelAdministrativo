@@ -90,15 +90,15 @@
     <?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('notifications')->html();
-} elseif ($_instance->childHasBeenRendered('glGpssZ')) {
-    $componentId = $_instance->getRenderedChildComponentId('glGpssZ');
-    $componentTag = $_instance->getRenderedChildComponentTagName('glGpssZ');
+} elseif ($_instance->childHasBeenRendered('taZ12ge')) {
+    $componentId = $_instance->getRenderedChildComponentId('taZ12ge');
+    $componentTag = $_instance->getRenderedChildComponentTagName('taZ12ge');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
-    $_instance->preserveRenderedChild('glGpssZ');
+    $_instance->preserveRenderedChild('taZ12ge');
 } else {
     $response = \Livewire\Livewire::mount('notifications');
     $html = $response->html();
-    $_instance->logRenderedChild('glGpssZ', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+    $_instance->logRenderedChild('taZ12ge', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
 echo $html;
 ?>

@@ -19,15 +19,15 @@
             <?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('api.api-token-manager')->html();
-} elseif ($_instance->childHasBeenRendered('BDMoq6S')) {
-    $componentId = $_instance->getRenderedChildComponentId('BDMoq6S');
-    $componentTag = $_instance->getRenderedChildComponentTagName('BDMoq6S');
+} elseif ($_instance->childHasBeenRendered('eNdEW9w')) {
+    $componentId = $_instance->getRenderedChildComponentId('eNdEW9w');
+    $componentTag = $_instance->getRenderedChildComponentTagName('eNdEW9w');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
-    $_instance->preserveRenderedChild('BDMoq6S');
+    $_instance->preserveRenderedChild('eNdEW9w');
 } else {
     $response = \Livewire\Livewire::mount('api.api-token-manager');
     $html = $response->html();
-    $_instance->logRenderedChild('BDMoq6S', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+    $_instance->logRenderedChild('eNdEW9w', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
 echo $html;
 ?>
