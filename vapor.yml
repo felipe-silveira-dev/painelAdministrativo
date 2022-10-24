@@ -7,7 +7,7 @@ environments:
         cli-memory: 512
         runtime: 'php-8.1:al2'
         build:
-            - 'composer install'
+            - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install'
             - 'php artisan event:cache'
             - 'php artisan config:cache'
             - 'php artisan view:cache'
@@ -15,6 +15,19 @@ environments:
             - 'npm install'
             - 'npm ci && npm run build && rm -rf node_modules'
         deploy:
+            - 'php artisan migrate:refresh --force'
+            - 'php artisan db:seed --force'
+        staging:
+          memory: 1024
+          database: painel-adm
+          cli-memory: 512
+          runtime: 'php-8.1:al2'
+          build:
+            - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install'
+            - 'npm install'
+            - 'npm run dev'
+            - 'npm ci && npm run build && rm -rf node_modules'
+          deploy:
             - 'php artisan migrate:refresh --force'
             - 'php artisan db:seed --force'
 
