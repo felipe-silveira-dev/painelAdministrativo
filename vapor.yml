@@ -3,13 +3,17 @@ name: painel-adm
 environments:
     production:
         memory: 1024
+        database: painel-adm
         cli-memory: 512
         runtime: 'php-8.1:al2'
         build:
-            - 'composer install --no-dev'
+            - 'composer install'
             - 'php artisan event:cache'
+            - 'php isan config:cache'
+            - 'php artisan view:cache'
+            - 'php artisan icons:cache'
             - 'npm ci && npm run build && rm -rf node_modules'
         deploy:
-            - 'php artisan migrate'
-            - 'php artisan db:seed'
+            - 'php artisan migrate:refresh --force'
+            - 'php artisan db:seed --force'
 
