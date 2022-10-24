@@ -1,0 +1,31 @@
+id: 37206
+name: painel-adm
+environments:
+    production:
+        memory: 1024
+        database: painel-adm
+        cli-memory: 512
+        runtime: 'php-8.1:al2'
+        build:
+            - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install'
+            - 'php artisan event:cache'
+            - 'php artisan config:cache'
+            - 'php artisan view:cache'
+            - 'php artisan icons:cache'
+            - 'npm ci && npm run build && rm -rf node_modules'
+            - 'npm run production'
+        deploy:
+            - 'php artisan migrate:refresh --force'
+            - 'php artisan db:seed --force'
+        staging:
+          memory: 1024
+          database: painel-adm
+          cli-memory: 512
+          runtime: 'php-8.1:al2'
+          build:
+            - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install'
+            - 'npm ci && npm run build && rm -rf node_modules'
+          deploy:
+            - 'php artisan migrate:refresh --force'
+            - 'php artisan db:seed --force'
+
