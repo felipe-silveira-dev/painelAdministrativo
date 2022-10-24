@@ -9,9 +9,10 @@ environments:
         build:
             - 'composer install'
             - 'php artisan event:cache'
-            - 'php isan config:cache'
+            - 'php artisan config:cache'
             - 'php artisan view:cache'
             - 'php artisan icons:cache'
+            - 'npm install'
             - 'npm ci && npm run build && rm -rf node_modules'
         deploy:
             - 'php artisan migrate:refresh --force'
