@@ -43,9 +43,15 @@ class ClienteResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('nome'),
-                Tables\Columns\TextColumn::make('telefone'),
+                Tables\Columns\TextColumn::make('nome')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('telefone')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->searchable()
+                    ->sortable()
                     ->dateTime('d/m/Y H:i:s')
                     ->label('Atualizado em'),
             ])
@@ -54,6 +60,8 @@ class ClienteResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

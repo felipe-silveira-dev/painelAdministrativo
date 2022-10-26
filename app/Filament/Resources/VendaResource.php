@@ -122,10 +122,16 @@ class VendaResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id'),
+                Tables\Columns\TextColumn::make('id')
+                ->searchable()
+                ->sortable(),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->date('d/m/Y H:i:s', 'America/Sao_Paulo'),
-                Tables\Columns\TextColumn::make('user.name'),
+                    ->date('d/m/Y H:i:s', 'America/Sao_Paulo')
+                    ->label('Última atualização')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('user.name')
+                    ->label('Vendedor'),
                 Tables\Columns\TextColumn::make('valor_total'),
             ])
             ->filters([
