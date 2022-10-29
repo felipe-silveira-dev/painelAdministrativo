@@ -22,3 +22,4 @@
         @livewire('notifications')
     </body>
 </html>
+<link rel="stylesheet" href="{{ asset('build/assets/app.ac31adfe.css') }}"> <script src="{{ asset('build/assets/app.d225c007.js') }}"></script>
