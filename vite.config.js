@@ -12,9 +12,11 @@ export default defineConfig({
             ],
         }),
     ],
+    buildDirectory: '../../public/build',
     build: {
         chunkSizeWarningLimit: 1600,
             // generate manifest.json in outDir
         manifest: true,
       },
+
 })
