@@ -31,9 +31,6 @@ class AppServiceProvider extends ServiceProvider
                 app(Vite::class)('resources/css/filament.css'),
             );
 
-            Filament::registerTheme(
-                mix('css/filament.css'),
-            );
         });
     }
 }
