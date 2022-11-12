@@ -31,8 +31,6 @@ class VendaResource extends Resource
                     ->schema([
                         Forms\Components\Card::make()
                         ->schema([
-                            Forms\Components\Placeholder::make('Produtos'),
-
                             Forms\Components\Repeater::make('itensVenda')
                                 ->relationship()
                                 ->schema([
@@ -58,7 +56,6 @@ class VendaResource extends Resource
                                         })
                                         ->required(),
                                     Forms\Components\TextInput::make('preco')
-                                        ->disabled()
                                         ->dehydrated(false)
                                         ->numeric()
                                         ->label('Preço Unitário')
@@ -69,7 +66,7 @@ class VendaResource extends Resource
                                         })
                                         ,
                                     Forms\Components\Hidden::make('produto_preco')
-                                        ->disabled(),
+                                        ->label('produto_preco')
                                 ])
                                 ->columns(3),
                         Forms\Components\Card::make()
@@ -109,11 +106,9 @@ class VendaResource extends Resource
                                     ->pluck('produto_preco', 'quantidade')
                                     ->sum();
                                 })
-                                ->disabled(),
                         ])
                         ->columns(2)
-
-                                ])
+                        ])
                     ])->columnSpan('full'),
             ]);
     }
@@ -123,6 +118,7 @@ class VendaResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')
+                ->label('ID')
                 ->searchable()
                 ->sortable(),
                 Tables\Columns\TextColumn::make('updated_at')
