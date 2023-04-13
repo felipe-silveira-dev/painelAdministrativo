@@ -7,3 +7,7 @@
 - Execute o comando <strong>npm install</strong> para instalar as dependências do Node.js.
 - Execute o comando <strong>npm run dev</strong> para compilar os arquivos do front-end.
 - Execute o comando <strong>php artisan serve</strong> para iniciar o servidor de desenvolvimento do Laravel.
+
+- acesse a rota localhost:8000/register faça um cadastro 
+- acesse a rota localhost:8000/admin usando as crendencias que cadastrou no passo anterior
+
