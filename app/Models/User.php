@@ -22,7 +22,7 @@ class User extends Authenticatable implements FilamentUser
 
     public function canAccessFilament(): bool
     {
-        return str_ends_with($this->email, '@email.com') && $this->hasVerifiedEmail();
+        return true; //str_ends_with($this->email, '@email.com') && $this->hasVerifiedEmail();
     }
 
     /**
@@ -65,4 +65,5 @@ class User extends Authenticatable implements FilamentUser
     protected $appends = [
         'profile_photo_url',
     ];
+
 }
