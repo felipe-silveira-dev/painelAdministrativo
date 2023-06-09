@@ -24,18 +24,25 @@ class ClienteResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('nome')
+                    ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('telefone')
-                    ->tel()
-                    ->maxLength(255),
+                    ->numeric()
+                    ->tel('0000000000')
+                    ->maxLength(11),
                 Forms\Components\TextInput::make('cpf')
+                    ->regex('/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('cnpj')
+                    ->regex('/^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/')
                     ->maxLength(255),
-                Forms\Components\DatePicker::make('data_nascimento'),
+                Forms\Components\DatePicker::make('data_nascimento')
+                    ->minDate(now()->subYears(80))
+                    ->maxDate(now()->subYears(18))
+                    ->displayFormat('d/m/Y'),
             ]);
     }
 
