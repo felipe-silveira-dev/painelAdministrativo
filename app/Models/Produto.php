@@ -36,9 +36,14 @@ class Produto extends Model
         return $this->belongsTo(Marca::class);
     }
 
-    // public function vendas()
-    // {
-    //     return $this->belongsToMany(Venda::class, 'item_vendas');
-    // }
+    public function vendas()
+    {
+        return $this->belongsTo(Venda::class);
+    }
+
+    public function itensVenda()
+    {
+        return $this->belongsTo(ItemVenda::class);
+    }
 
 }

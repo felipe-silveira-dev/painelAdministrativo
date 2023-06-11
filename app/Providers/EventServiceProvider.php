@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\ItemVenda;
+use App\Models\Venda;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -27,7 +29,8 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Venda::observe(\App\Observers\VendaObserver::class);
+        ItemVenda::observe(\App\Observers\ItemVendaObserver::class);
     }
 
     /**

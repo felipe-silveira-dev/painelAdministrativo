@@ -61,10 +61,15 @@ class VendaResource extends Resource
                                         ->label('Preço Unitário')
                                         ->placeholder(function (Closure $get, Closure $set) {
                                             $valorTotalItem = $get('preco') * $get('quantidade');
-                                            //$set('preco', $valorTotalItem);
                                             $set('produto_preco', $valorTotalItem);
-                                        })
-                                        ,
+                                        }),
+                                    Forms\Components\TextInput::make('produto_preco')
+                                        ->dehydrated(false)
+                                        ->numeric()
+                                        ->label('Preço Total')
+                                        ->placeholder(function ($state) {
+                                            return $state['produto_preco'] ?? 0;
+                                        }),
                                     Forms\Components\Hidden::make('produto_preco')
                                         ->label('produto_preco')
                                 ])
@@ -83,6 +88,7 @@ class VendaResource extends Resource
                                 ->required(),
                             Forms\Components\DatePicker::make('data')
                                 ->label('Data')
+                                ->displayFormat('d/m/Y')
                                 ->default(now('America/Sao_Paulo'))
                                 ->required(),
                             Forms\Components\Select::make('metodo_pagamento_id')
@@ -103,14 +109,14 @@ class VendaResource extends Resource
                                     }
                                     $set('valor_total', $valorTotal);
                                     return collect($get('itensVenda'))
-                                    ->pluck('produto_preco', 'quantidade')
-                                    ->sum();
+                                            ->pluck('produto_preco', 'quantidade')
+                                            ->sum();
                                 })
                         ])
                         ->columns(2)
                         ])
                     ])->columnSpan('full'),
-            ]);
+                            ]);
     }
 
     public static function table(Table $table): Table
@@ -118,9 +124,9 @@ class VendaResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')
-                ->label('ID')
-                ->searchable()
-                ->sortable(),
+                    ->label('ID')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->date('d/m/Y H:i:s', 'America/Sao_Paulo')
                     ->label('Última atualização')
@@ -147,7 +153,7 @@ class VendaResource extends Resource
     public static function getRelations(): array
     {
         return [
-
+            
         ];
     }
 
